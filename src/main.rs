@@ -24,14 +24,21 @@ async fn main() {
         .error()
         .expect("Failed to connect to qbittorrent");
 
+    let mut prev_port = None;
     loop {
         interval.tick().await; // Wait for the interval
         let port = read_port().expect("Failed to read port from file");
-        set_port(port, &api)
-            .await
-            .error()
-            .expect("Failed to set port");
-        info!("Port updated to {}", port);
+        match prev_port {
+            Some(p) if p == port => continue,
+            _ => {
+                set_port(port, &api)
+                    .await
+                    .error()
+                    .expect("Failed to set port");
+                prev_port = Some(port);
+                info!("Port updated to {}", port);
+            }
+        }
     }
 }
 
