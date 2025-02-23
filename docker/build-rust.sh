@@ -12,8 +12,8 @@ if [ "$TARGET_ARCH" == "linux/arm64/v8" ]; then
     rustup target add aarch64-unknown-linux-gnu
     apt update -y && apt install -y gcc-aarch64-linux-gnu
     CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc cargo build --release --target=aarch64-unknown-linux-gnu
-    mv target/aarch64-unknown-linux-gnu/release/byos_rs target/byos_rs
+    mv target/aarch64-unknown-linux-gnu/release/qbit_gluetun_port target/qbit_gluetun_port
 else
   cargo build --release
-  mv target/release/byos_rs target/byos_rs
+  mv target/release/qbit_gluetun_port target/qbit_gluetun_port
 fi
